@@ -1,1 +1,1347 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <!-- Dòng dưới giúp trang hiển thị đúng kích thước trên điện thoại -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NguLamEnglish - Học tiếng Anh hiệu quả</title>
 
+  <style>
+    /* ============ 1. BIẾN MÀU & CÀI ĐẶT CHUNG ============ */
+    /* Khai báo màu một lần ở đây, muốn đổi màu chỉ cần sửa tại đây */
+    :root {
+      --red: #e11d2e;        /* đỏ chính */
+      --red-dark: #b3121f;   /* đỏ đậm */
+      --red-light: #fff1f2;  /* đỏ rất nhạt (nền) */
+      --white: #ffffff;
+      --text: #1f2937;       /* màu chữ */
+      --gray: #6b7280;       /* màu chữ phụ */
+      --radius: 18px;        /* độ bo góc */
+      --shadow: 0 10px 30px rgba(225, 29, 46, 0.15);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }   /* cuộn trang mượt */
+
+    body {
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: var(--white);
+      line-height: 1.6;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    /* Khung chứa nội dung, giới hạn chiều rộng cho đẹp trên máy tính */
+    .container {
+      width: 100%;
+      max-width: 1150px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ============ 2. THANH MENU (HEADER) ============ */
+    header {
+      position: sticky;      /* menu dính ở trên cùng khi cuộn */
+      top: 0;
+      z-index: 100;
+      background: var(--white);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+
+    .logo {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--red);
+    }
+    .logo span { color: var(--text); }
+
+    .menu {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+    .menu a {
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    .menu a:hover { color: var(--red); }
+
+    /* Nút bấm dùng chung */
+    .btn {
+      display: inline-block;
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-weight: 700;
+      border: 2px solid var(--red);
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+    .btn:hover { transform: translateY(-3px); }
+    .btn-red { background: var(--red); color: var(--white); box-shadow: var(--shadow); }
+    .btn-red:hover { background: var(--red-dark); }
+    .btn-white { background: var(--white); color: var(--red); border-color: var(--white); }
+
+    /* Nút 3 gạch (chỉ hiện trên điện thoại) */
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 2rem;
+      color: var(--red);
+      cursor: pointer;
+    }
+/* ============ 3. BANNER (HERO) ============ */
+    .hero {
+      background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
+      color: var(--white);
+      padding: 80px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Hai hình tròn trang trí */
+    .hero::before, .hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .hero::before { width: 380px; height: 380px; top: -120px; right: -100px; }
+    .hero::after  { width: 250px; height: 250px; bottom: -90px; left: -60px; }
+
+    .hero-inner {
+      position: relative;   /* để nằm trên hình tròn trang trí */
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+    .hero h1 { font-size: 2.8rem; line-height: 1.2; margin-bottom: 18px; }
+    .hero p  { font-size: 1.1rem; opacity: 0.95; margin-bottom: 30px; }
+    .hero-buttons { display: flex; gap: 14px; flex-wrap: wrap; }
+    .hero .btn-outline { background: transparent; color: var(--white); border-color: var(--white); }
+    .hero .btn-outline:hover { background: var(--white); color: var(--red); }
+
+    /* Khung số liệu bên phải banner */
+    .hero-card {
+      background: var(--white);
+      color: var(--text);
+      border-radius: var(--radius);
+      padding: 30px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+    .hero-card h3 { color: var(--red); margin-bottom: 18px; }
+    .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .stat strong { display: block; font-size: 1.8rem; color: var(--red); }
+    .stat span { font-size: 0.9rem; color: var(--gray); }
+
+    /* ============ 4. KHU VỰC 4 KỸ NĂNG ============ */
+    .skills { padding: 80px 0; background: var(--red-light); }
+
+    .section-title { text-align: center; margin-bottom: 50px; }
+    .section-title h2 { font-size: 2.2rem; color: var(--red); }
+    .section-title p { color: var(--gray); margin-top: 8px; }
+
+    /* Lưới 4 cột trên máy tính */
+    .skill-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 34px 24px;
+      text-align: center;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+      border-top: 5px solid var(--red);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .card:hover {                 /* rê chuột vào thẻ thì thẻ nổi lên */
+      transform: translateY(-10px);
+      box-shadow: var(--shadow);
+    }
+    .card .icon {
+      width: 80px; height: 80px;
+      margin: 0 auto 18px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.4rem;
+      background: var(--red-light);
+      border-radius: 50%;
+    }
+.card h3 { font-size: 1.4rem; margin-bottom: 10px; }
+    .card p  { color: var(--gray); font-size: 0.95rem; margin-bottom: 20px; }
+    .card .link { color: var(--red); font-weight: 700; }
+    .card .link:hover { text-decoration: underline; }
+
+    /* Hiệu ứng thẻ hiện dần khi cuộn tới (JavaScript sẽ thêm lớp "show") */
+    .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.7s, transform 0.7s; }
+    .reveal.show { opacity: 1; transform: none; }
+
+    /* ============ 4B. CỬA SỔ BÀI TEST (POPUP) ============ */
+    /* Lớp nền tối phủ toàn màn hình, mặc định ẩn */
+    .quiz-overlay {
+      position: fixed;
+      inset: 0;                         /* phủ kín 4 cạnh màn hình */
+      background: rgba(0, 0, 0, 0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 1000;
+    }
+    .quiz-overlay.open { display: flex; }   /* JavaScript thêm "open" để hiện popup */
+
+    .quiz-box {
+      background: var(--white);
+      width: 100%;
+      max-width: 640px;
+      max-height: 92vh;
+      overflow-y: auto;                 /* nội dung dài thì cuộn bên trong */
+      border-radius: var(--radius);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+      animation: pop 0.3s ease;
+    }
+    @keyframes pop {
+      from { transform: scale(0.9); opacity: 0; }
+      to   { transform: scale(1);   opacity: 1; }
+    }
+
+    .quiz-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--red);
+      color: var(--white);
+      padding: 18px 24px;
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+    .quiz-head h3 { font-size: 1.25rem; }
+    .quiz-close {
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 1.8rem;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .quiz-content { padding: 24px; }
+
+    /* Thanh tiến độ */
+    .progress-text { font-size: 0.9rem; color: var(--gray); margin-bottom: 6px; }
+    .progress { height: 8px; background: var(--red-light); border-radius: 10px; margin-bottom: 20px; overflow: hidden; }
+    .progress-bar { height: 100%; background: var(--red); border-radius: 10px; transition: width 0.4s; }
+
+    .passage {
+      background: var(--red-light);
+      border-left: 4px solid var(--red);
+      padding: 14px 16px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+      font-size: 0.97rem;
+    }
+    .question { font-size: 1.15rem; font-weight: 700; margin-bottom: 16px; }
+
+    .listen-btn {
+      display: inline-block;
+      margin-bottom: 16px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 50px;
+      background: var(--red);
+      color: var(--white);
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .listen-btn:hover { background: var(--red-dark); }
+/* Các đáp án A, B, C, D */
+    .option {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      font-size: 1rem;
+      background: var(--white);
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .option:hover:not(:disabled) { border-color: var(--red); background: var(--red-light); }
+    .option:disabled { cursor: default; }
+    .option.correct { background: #dcfce7; border-color: #16a34a; }   /* đáp án đúng: xanh */
+    .option.wrong   { background: #fee2e2; border-color: var(--red); } /* chọn sai: đỏ */
+
+    .feedback {
+      margin: 6px 0 16px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: #f9fafb;
+      font-size: 0.95rem;
+    }
+
+    .quiz-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
+
+    /* Giao diện riêng cho Speaking (micro) và Writing (dịch câu) */
+    .feedback { white-space: pre-line; }   /* cho phép xuống dòng trong phần nhận xét */
+
+    .tip  { color: var(--gray); font-size: 0.92rem; margin-bottom: 10px; }
+    .hint { color: var(--gray); font-size: 0.92rem; margin-bottom: 14px; }
+
+    .vi-sentence {                          /* câu tiếng Việt cần dịch */
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--red-dark);
+      background: var(--red-light);
+      padding: 16px;
+      border-radius: 12px;
+      margin-bottom: 8px;
+    }
+
+    .type-input {                           /* ô gõ câu trả lời */
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 1rem;
+      font-family: inherit;
+      border: 2px solid #e5e7eb;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      resize: vertical;
+    }
+    .type-input:focus { outline: none; border-color: var(--red); }
+
+    .mic-btn {                              /* nút micro lớn */
+      display: block;
+      margin: 6px auto 14px;
+      padding: 16px 30px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 50px;
+      background: var(--red);
+      color: var(--white);
+      cursor: pointer;
+      box-shadow: var(--shadow);
+    }
+    .mic-btn:disabled { opacity: 0.5; cursor: default; }
+    .mic-btn.recording { background: var(--red-dark); animation: pulse 1.2s infinite; }
+    @keyframes pulse {                      /* hiệu ứng vòng tròn khi đang thu âm */
+      0%   { box-shadow: 0 0 0 0 rgba(225, 29, 46, 0.5); }
+      70%  { box-shadow: 0 0 0 18px rgba(225, 29, 46, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(225, 29, 46, 0); }
+    }
+    .mic-status { text-align: center; min-height: 22px; font-weight: 600; color: var(--red); margin-bottom: 10px; font-size: 0.95rem; }
+
+    .transcript {                           /* khung hiện chữ mà micro nghe được */
+min-height: 56px;
+      padding: 12px 14px;
+      border: 2px dashed #e5e7eb;
+      border-radius: 12px;
+      color: var(--gray);
+      margin-bottom: 14px;
+    }
+    .transcript.has-text { color: var(--text); border-style: solid; border-color: var(--red); }
+
+    /* Màn hình kết quả */
+    .result { text-align: center; padding: 10px 0; }
+    .result .score { font-size: 3.2rem; font-weight: 800; color: var(--red); }
+    .result p { color: var(--gray); margin: 8px 0 22px; }
+
+    /* ============ 5. KHỐI KÊU GỌI ĐĂNG KÝ ============ */
+    .cta { padding: 70px 0; text-align: center; }
+    .cta h2 { font-size: 2rem; margin-bottom: 12px; }
+    .cta p { color: var(--gray); margin-bottom: 26px; }
+
+    /* Khung giới thiệu giáo viên */
+    .highlight {
+      max-width: 800px;
+      margin: 0 auto 26px;
+      padding: 22px 26px;
+      background: var(--red-light);
+      border: 2px solid var(--red);
+      border-radius: var(--radius);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--red-dark);
+      line-height: 1.7;
+    }
+
+    /* ============ 5B. FORM ĐĂNG KÝ ============ */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;     /* 2 cột trên máy tính */
+      gap: 14px 16px;
+    }
+    .form-grid .full { grid-column: 1 / -1; }   /* ô chiếm trọn cả hàng */
+
+    .field label, .field .label {
+      display: block;
+      font-weight: 700;
+      font-size: 0.92rem;
+      margin-bottom: 6px;
+    }
+    .field label span, .field .label span { color: var(--red); }   /* dấu * bắt buộc */
+
+    .field input[type="text"],
+    .field input[type="tel"],
+    .field input[type="email"],
+    .field input[type="date"],
+    .field select {
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 1rem;
+      font-family: inherit;
+      border: 2px solid #e5e7eb;
+      border-radius: 10px;
+      background: var(--white);
+    }
+    .field input:focus, .field select:focus {
+      outline: none;
+      border-color: var(--red);           /* viền đỏ khi đang nhập */
+    }
+
+    .checks { display: flex; flex-wrap: wrap; gap: 8px 18px; }
+    .checks label { font-weight: 500; margin: 0; cursor: pointer; }
+
+    .form-error { color: var(--red); font-weight: 600; min-height: 22px; margin: 12px 0 4px; }
+
+    /* Màn hình báo đăng ký thành công */
+    .success { text-align: center; padding: 20px 0; display: none; }
+    .success .big { font-size: 3.5rem; }
+    .success h3 { color: var(--red); margin: 8px 0; }
+    .success p { color: var(--gray); margin-bottom: 20px; }
+
+    @media (max-width: 600px) {
+      .form-grid { grid-template-columns: 1fr; }   /* điện thoại: 1 cột */
+    }
+
+    /* ============ 6. CHÂN TRANG (FOOTER) ============ */
+    footer { background: #1a1a1a; color: #d1d5db; padding: 50px 0 20px; }
+    .footer-grid {
+      display: grid;
+grid-template-columns: 2fr 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+    footer h4 { color: var(--white); margin-bottom: 14px; }
+    footer ul { list-style: none; }
+    footer li { margin-bottom: 8px; }
+    footer a:hover { color: #ff6b77; }
+    .copyright {
+      text-align: center;
+      border-top: 1px solid #333;
+      padding-top: 18px;
+      font-size: 0.9rem;
+    }
+
+    /* ============ 7. RESPONSIVE (CHO MÀN HÌNH NHỎ) ============ */
+    /* Máy tính bảng: lưới 4 cột chuyển thành 2 cột */
+    @media (max-width: 992px) {
+      .skill-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* Điện thoại */
+    @media (max-width: 768px) {
+      .hamburger { display: block; }          /* hiện nút 3 gạch */
+
+      .menu {
+        position: absolute;
+        top: 70px; left: 0; right: 0;
+        flex-direction: column;
+        background: var(--white);
+        padding: 20px 0;
+        gap: 18px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        display: none;                         /* ẩn menu mặc định */
+      }
+      .menu.open { display: flex; }            /* JavaScript thêm "open" để hiện menu */
+
+      .hero { padding: 50px 0; }
+      .hero-inner { grid-template-columns: 1fr; }  /* xếp 1 cột */
+      .hero h1 { font-size: 2.1rem; }
+
+      .skill-grid { grid-template-columns: 1fr; }  /* thẻ xếp dọc từng cái */
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============ MENU ============ -->
+  <header>
+    <div class="container nav">
+      <a href="#" class="logo">NguLam<span>English</span></a>
+
+      <button class="hamburger" id="hamburger" aria-label="Mở menu">☰</button>
+
+      <ul class="menu" id="menu">
+        <li><a href="#home">Trang chủ</a></li>
+        <li><a href="#skills">Kỹ năng</a></li>
+        <li><a href="#courses">Khóa học</a></li>
+        <li><a href="#contact">Liên hệ</a></li>
+        <li><a href="#" class="btn btn-red">Đăng nhập</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ============ BANNER ============ -->
+  <section class="hero" id="home">
+    <div class="container hero-inner">
+      <div>
+        <h1>Chinh phục tiếng Anh<br>cùng NguLamEnglish 🚀</h1>
+        <p>Học đủ 4 kỹ năng Reading, Writing, Listening, Speaking với lộ trình rõ ràng, bài tập thực tế và giáo viên đồng hành mỗi ngày.</p>
+        <div class="hero-buttons">
+          <a href="#skills" class="btn btn-white">Bắt đầu học ngay</a>
+          <a href="#courses" class="btn btn-outline">Xem khóa học</a>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <h3>NguLamEnglish trong con số</h3>
+        <div class="stats">
+          <div class="stat"><strong>36.000+</strong><span>Học viên</span></div>
+          <div class="stat"><strong>670+</strong><span>Bài học</span></div>
+<div class="stat"><strong>4</strong><span>Kỹ năng</span></div>
+          <div class="stat"><strong>95%</strong><span>Hài lòng</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4 THẺ KỸ NĂNG ============ -->
+  <section class="skills" id="skills">
+    <div class="container">
+      <div class="section-title">
+        <h2>4 kỹ năng tiếng Anh</h2>
+        <p>Chọn kỹ năng bạn muốn luyện tập hôm nay</p>
+      </div>
+
+      <div class="skill-grid">
+        <div class="card reveal">
+          <div class="icon">📖</div>
+          <h3>Reading</h3>
+          <p>Luyện đọc hiểu qua các bài báo, đoạn văn với nhiều chủ đề và mức độ.</p>
+          <a href="#" class="link" data-skill="reading">Học ngay →</a>
+        </div>
+
+        <div class="card reveal">
+          <div class="icon">✍️</div>
+          <h3>Writing</h3>
+          <p>Rèn kỹ năng viết câu, đoạn văn và bài luận với phần chấm chữa chi tiết.</p>
+          <a href="#" class="link" data-skill="writing">Học ngay →</a>
+        </div>
+
+        <div class="card reveal">
+          <div class="icon">🎧</div>
+          <h3>Listening</h3>
+          <p>Nghe hiểu qua hội thoại, bài giảng, video với giọng đọc đa dạng.</p>
+          <a href="#" class="link" data-skill="listening">Học ngay →</a>
+        </div>
+
+        <div class="card reveal">
+          <div class="icon">🎤</div>
+          <h3>Speaking</h3>
+          <p>Luyện phát âm và giao tiếp tự tin với bài tập nói theo tình huống.</p>
+          <a href="#" class="link" data-skill="speaking">Học ngay →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ KÊU GỌI ĐĂNG KÝ ============ -->
+  <section class="cta" id="courses">
+    <div class="container">
+      <h2>Sẵn sàng nâng trình tiếng Anh?</h2>
+      <!-- Khung nổi bật giới thiệu đội ngũ giáo viên -->
+      <div class="highlight">
+        Bứt tốc số điểm cùng với Thầy Huỳnh Chí Vỹ (9.0 Reading), Phạm Tuấn Hoàn (9.0 Speaking), Ngô Hồ Quang Nhựt (9.0 Listening) và Nguyễn Tấn Phát (9.0 Writing) khi đăng kí khóa học Online.
+      </div>
+      <p>Đăng ký miễn phí và nhận bài kiểm tra trình độ đầu vào.</p>
+      <a href="#" class="btn btn-red" id="signupBtn">Đăng ký miễn phí</a>
+    </div>
+  </section>
+
+  <!-- ============ CHÂN TRANG ============ -->
+  <footer id="contact">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h4>NguLamEnglish</h4>
+          <p>Nền tảng học tiếng Anh trực tuyến giúp bạn tự tin giao tiếp và đạt điểm cao trong các kỳ thi.</p>
+        </div>
+        <div>
+          <h4>Liên kết</h4>
+          <ul>
+            <li><a href="#home">Trang chủ</a></li>
+            <li><a href="#skills">Kỹ năng</a></li>
+            <li><a href="#courses">Khóa học</a></li>
+          </ul>
+        </div>
+        <div>
+<h4>Liên hệ</h4>
+          <ul>
+            <li>📍 Tây Nam</li>
+            <li>📞 03636363636</li>
+            <li>✉️ hellohoanvyphatnhut@english</li>
+          </ul>
+        </div>
+      </div>
+      <div class="copyright">
+        © <span id="year"></span> NguLamEnglish. Mọi quyền được bảo lưu.
+      </div>
+    </div>
+    </footer>
+
+  <!-- ============ CỬA SỔ BÀI TEST (mặc định ẩn) ============ -->
+  <div class="quiz-overlay" id="quizOverlay">
+    <div class="quiz-box" role="dialog" aria-modal="true">
+      <div class="quiz-head">
+        <h3 id="quizTitle">Bài test</h3>
+        <button class="quiz-close" id="quizClose" aria-label="Đóng">×</button>
+      </div>
+      <!-- Nội dung câu hỏi sẽ được JavaScript đưa vào đây -->
+      <div class="quiz-content" id="quizBody"></div>
+    </div>
+  </div>
+
+  <!-- ============ CỬA SỔ ĐĂNG KÝ (mặc định ẩn) ============ -->
+  <div class="quiz-overlay" id="signupOverlay">
+    <div class="quiz-box" role="dialog" aria-modal="true">
+      <div class="quiz-head">
+        <h3>📝 Đăng ký miễn phí</h3>
+        <button class="quiz-close" id="signupClose" aria-label="Đóng">×</button>
+      </div>
+
+      <div class="quiz-content">
+        <!-- Biểu mẫu thông tin cá nhân -->
+        <form id="signupForm" novalidate>
+          <div class="form-grid">
+            <div class="field full">
+              <label for="fullName">Họ và tên <span>*</span></label>
+              <input type="text" id="fullName" name="fullName" placeholder="Ví dụ: Nguyễn Văn A">
+            </div>
+
+            <div class="field">
+              <label for="birthday">Ngày sinh</label>
+              <input type="date" id="birthday" name="birthday">
+            </div>
+
+            <div class="field">
+              <label for="gender">Giới tính</label>
+              <select id="gender" name="gender">
+                <option value="">-- Chọn --</option>
+                <option>Nam</option>
+                <option>Nữ</option>
+                <option>Khác</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="phone">Số điện thoại <span>*</span></label>
+              <input type="tel" id="phone" name="phone" placeholder="Ví dụ: 0363636363">
+            </div>
+
+            <div class="field">
+              <label for="email">Email <span>*</span></label>
+              <input type="email" id="email" name="email" placeholder="ten@email.com">
+            </div>
+
+            <div class="field full">
+              <label for="city">Tỉnh / Thành phố đang sống</label>
+              <input type="text" id="city" name="city" placeholder="Ví dụ: Cần Thơ">
+            </div>
+
+            <div class="field">
+              <label for="level">Trình độ hiện tại</label>
+              <select id="level" name="level">
+<option value="">-- Chọn --</option>
+                <option>Mất gốc / Mới bắt đầu</option>
+                <option>Cơ bản</option>
+                <option>Trung cấp</option>
+                <option>Nâng cao</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="goal">Mục tiêu học</label>
+              <select id="goal" name="goal">
+                <option value="">-- Chọn --</option>
+                <option>Giao tiếp hằng ngày</option>
+                <option>Luyện thi IELTS</option>
+                <option>Tiếng Anh đi làm</option>
+                <option>Học tốt ở trường</option>
+              </select>
+            </div>
+
+            <div class="field full">
+              <div class="label">Kỹ năng bạn muốn cải thiện</div>
+              <div class="checks">
+                <label><input type="checkbox" name="skills" value="Reading"> Reading</label>
+                <label><input type="checkbox" name="skills" value="Writing"> Writing</label>
+                <label><input type="checkbox" name="skills" value="Listening"> Listening</label>
+                <label><input type="checkbox" name="skills" value="Speaking"> Speaking</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chỗ hiện thông báo lỗi -->
+          <div class="form-error" id="signupError"></div>
+          <button type="submit" class="btn btn-red">Gửi đăng ký</button>
+        </form>
+
+        <!-- Màn hình thành công (ẩn cho đến khi đăng ký xong) -->
+        <div class="success" id="signupSuccess">
+          <div class="big">🎉</div>
+          <h3 id="successTitle">Đăng ký thành công!</h3>
+          <p>Chúng tôi sẽ liên hệ với bạn sớm nhất để tư vấn khóa học Online.</p>
+          <button class="btn btn-red" id="successClose">Đóng</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ============ JAVASCRIPT ============ */
+
+    // 1. Bấm nút ☰ thì mở/đóng menu trên điện thoại
+    const hamburger = document.getElementById("hamburger");
+    const menu = document.getElementById("menu");
+
+    hamburger.addEventListener("click", function () {
+      menu.classList.toggle("open");   // có lớp "open" thì bỏ, chưa có thì thêm
+    });
+
+    // Bấm vào một mục trong menu thì tự đóng menu lại
+    menu.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () {
+        menu.classList.remove("open");
+      });
+    });
+
+    // 2. Hiệu ứng: các thẻ hiện dần khi cuộn trang tới
+    const cards = document.querySelectorAll(".reveal");
+
+    const observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry, i) {
+        if (entry.isIntersecting) {
+          // setTimeout giúp các thẻ hiện lần lượt thay vì cùng lúc
+          setTimeout(function () {
+entry.target.classList.add("show");
+          }, i * 120);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    cards.forEach(function (card) { observer.observe(card); });
+
+    // 3. Tự điền năm hiện tại vào footer
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // 4. FORM ĐĂNG KÝ MIỄN PHÍ
+    const signupOverlay = document.getElementById("signupOverlay");
+    const signupForm    = document.getElementById("signupForm");
+    const signupSuccess = document.getElementById("signupSuccess");
+    const signupError   = document.getElementById("signupError");
+
+    // Mở form: hiện form, ẩn màn hình thành công, xóa lỗi cũ
+    function openSignup() {
+      signupForm.style.display = "block";
+      signupSuccess.style.display = "none";
+      signupError.textContent = "";
+      signupOverlay.classList.add("open");
+      document.body.style.overflow = "hidden";   // khóa cuộn trang phía sau
+    }
+
+    function closeSignup() {
+      signupOverlay.classList.remove("open");
+      document.body.style.overflow = "";
+    }
+
+    // Bấm nút "Đăng ký miễn phí" thì mở form
+    document.getElementById("signupBtn").addEventListener("click", function (e) {
+      e.preventDefault();   // chặn việc nhảy trang
+      openSignup();
+    });
+
+    // Các cách đóng form: dấu ×, nút Đóng, bấm nền tối, phím Esc
+    document.getElementById("signupClose").addEventListener("click", closeSignup);
+    document.getElementById("successClose").addEventListener("click", closeSignup);
+    signupOverlay.addEventListener("click", function (e) {
+      if (e.target === signupOverlay) closeSignup();
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") closeSignup();
+    });
+
+    // Khi bấm "Gửi đăng ký": kiểm tra thông tin rồi báo thành công
+    signupForm.addEventListener("submit", function (e) {
+      e.preventDefault();   // chặn việc tải lại trang
+
+      const name  = document.getElementById("fullName").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const email = document.getElementById("email").value.trim();
+
+      // Kiểm tra từng ô bắt buộc, sai thì báo lỗi và dừng lại
+      if (name === "") { signupError.textContent = "Vui lòng nhập họ và tên."; return; }
+      if (!/^0\d{9,10}$/.test(phone)) {
+        signupError.textContent = "Số điện thoại chưa đúng (bắt đầu bằng số 0, gồm 10–11 chữ số).";
+        return;
+      }
+      if (!/^\S+@\S+\.\S+$/.test(email)) {
+        signupError.textContent = "Email chưa đúng định dạng (ví dụ: ten@email.com).";
+        return;
+      }
+
+      // Thông tin hợp lệ: hiện màn hình cảm ơn
+      signupError.textContent = "";
+      document.getElementById("successTitle").textContent = "Cảm ơn " + name + "! Đăng ký thành công.";
+signupForm.style.display = "none";
+      signupSuccess.style.display = "block";
+      signupForm.reset();   // xóa sạch các ô đã nhập
+    });
+
+    /* ============ 5. BÀI TEST CHO 4 KỸ NĂNG ============ */
+
+    // ----- 5.1 DỮ LIỆU CÂU HỎI -----
+    // Mỗi câu gồm: q (câu hỏi), options (các đáp án), answer (số thứ tự đáp án đúng,
+    // bắt đầu đếm từ 0), explain (giải thích). Muốn thêm câu hỏi, chỉ cần copy một khối { ... }.
+    const quizData = {
+
+      reading: {
+        title: "📖 Bài test Reading",
+        passage: "Tom lives in Da Nang with his family. Every morning he gets up at 6 a.m. and goes jogging along the beach. After that, he has breakfast and rides his bike to school. He likes English because his teacher makes the lessons fun. On weekends, he visits his grandmother in Hoi An.",
+        questions: [
+          { q: "Where does Tom live?", options: ["Hue", "Da Nang", "Hoi An", "Hanoi"], answer: 1,
+            explain: "Câu đầu: \"Tom lives in Da Nang\"." },
+          { q: "What does Tom do at 6 a.m.?", options: ["Eats breakfast", "Goes to school", "Goes jogging", "Visits his grandmother"], answer: 2,
+            explain: "Tom thức dậy lúc 6 giờ và chạy bộ (goes jogging) dọc bãi biển." },
+          { q: "How does Tom go to school?", options: ["By bus", "On foot", "By motorbike", "By bike"], answer: 3,
+            explain: "\"rides his bike to school\" nghĩa là đạp xe đến trường." },
+          { q: "Why does Tom like English?", options: ["It is easy", "His teacher makes lessons fun", "He lives near the beach", "His family speaks English"], answer: 1,
+            explain: "\"his teacher makes the lessons fun\" – thầy cô làm bài học vui." },
+          { q: "Where does Tom go on weekends?", options: ["To the beach", "To school", "To Hoi An", "To Hue"], answer: 2,
+            explain: "Cuối tuần Tom đến thăm bà ở Hội An." }
+        ]
+      },
+
+      writing: {
+        title: "✍️ Bài test Writing",
+        questions: [
+          { q: "She ___ to school every day.", options: ["go", "goes", "going", "gone"], answer: 1,
+            explain: "Chủ ngữ \"She\" (ngôi thứ 3 số ít) ở thì hiện tại đơn nên động từ thêm -es: goes." },
+          { q: "Choose the correct sentence.", options: ["He don't like coffee.", "He doesn't likes coffee.", "He doesn't like coffee.", "He not like coffee."], answer: 2,
+            explain: "Với \"He\" dùng \"doesn't\" + động từ nguyên mẫu (không thêm s): doesn't like." },
+          { q: "The ___ are playing in the garden.", options: ["childs", "child", "childrens", "children"], answer: 3,
+            explain: "\"Child\" có số nhiều bất quy tắc là \"children\"." },
+          { q: "I was tired, ___ I finished my homework.", options: ["but", "because", "so that", "or"], answer: 0,
+explain: "\"but\" (nhưng) nối hai ý trái ngược: mệt nhưng vẫn làm xong bài." },
+          { q: "Choose the correct sentence.", options: ["I have lived here since 2020.", "I have lived here for 2020.", "I live here since 2020.", "I am living here since 2020."], answer: 0,
+            explain: "\"since + mốc thời gian\" đi với thì hiện tại hoàn thành: have lived since 2020." }
+        ]
+      },
+
+      listening: {
+        title: "🎧 Bài test Listening",
+        questions: [
+          { say: "My name is Anna and I am from Canada.",
+            q: "Where is Anna from?", options: ["China", "Cuba", "Canada", "Cambodia"], answer: 2,
+            explain: "Anna nói: \"I am from Canada\"." },
+          { say: "The meeting starts at half past three.",
+            q: "What time does the meeting start?", options: ["2:30", "3:30", "3:15", "4:30"], answer: 1,
+            explain: "\"half past three\" nghĩa là 3 giờ rưỡi (3:30)." },
+          { say: "I would like a cup of tea with two sugars, please.",
+            q: "How many sugars does the speaker want?", options: ["One", "Two", "Three", "None"], answer: 1,
+            explain: "\"two sugars\" – hai viên đường." },
+          { say: "It will be rainy tomorrow, so take an umbrella.",
+            q: "What should you take tomorrow?", options: ["Sunglasses", "A hat", "An umbrella", "A coat"], answer: 2,
+            explain: "Ngày mai có mưa (rainy) nên cần mang ô (umbrella)." },
+          { say: "The train to London leaves from platform number five.",
+            q: "Which platform does the train leave from?", options: ["Platform 15", "Platform 5", "Platform 50", "Platform 3"], answer: 1,
+            explain: "\"number five\" là số 5. Chú ý phân biệt five (5) và fifteen (15)." }
+        ]
+      },
+
+      speaking: {
+        title: "🎤 Bài test Speaking",
+        questions: [
+          { say: "How are you?",
+            q: "Someone asks: \"How are you?\" What is the best answer?", options: ["I am 20 years old.", "I'm fine, thank you. And you?", "Yes, I am.", "My name is Lan."], answer: 1,
+            explain: "\"How are you?\" hỏi thăm sức khỏe nên trả lời \"I'm fine, thank you. And you?\"." },
+          { q: "Which word rhymes with \"light\"?", options: ["night", "list", "late", "lit"], answer: 0,
+            explain: "\"light\" và \"night\" cùng vần /aɪt/." },
+          { say: "Could you say that again, please?",
+            q: "You did not hear someone clearly. What can you say?", options: ["Good luck!", "Could you repeat that, please?", "See you later!", "That's all right."], answer: 1,
+            explain: "\"Could you repeat that, please?\" là cách lịch sự để nhờ người khác nói lại." },
+          { say: "What would you like to drink?",
+q: "At a café, the waiter asks: \"What would you like to drink?\" Choose the best reply.", options: ["I like swimming.", "I'd like an orange juice, please.", "It is very hot.", "I am a student."], answer: 1,
+            explain: "\"I'd like ... , please.\" là mẫu câu gọi món lịch sự." },
+          { q: "In the word \"banana\", which syllable is stressed (nhấn trọng âm)?", options: ["The first: BA-na-na", "The second: ba-NA-na", "The third: ba-na-NA", "All the same"], answer: 1,
+            explain: "Trọng âm rơi vào âm tiết thứ hai: ba-NA-na." }
+        ]
+      }
+    };
+
+    // ----- 5.2 LẤY CÁC PHẦN TỬ TRÊN TRANG -----
+    const overlay   = document.getElementById("quizOverlay");
+    const quizTitle = document.getElementById("quizTitle");
+    const quizBody  = document.getElementById("quizBody");
+    const quizClose = document.getElementById("quizClose");
+
+    // Các biến nhớ trạng thái bài test hiện tại
+    let currentQuiz = null;   // bộ câu hỏi đang làm
+    let qIndex = 0;           // đang ở câu số mấy
+    let score = 0;            // số câu đúng
+
+    // Hàm nhỏ giúp tạo nhanh một thẻ HTML: tag = loại thẻ, cls = tên class, text = chữ bên trong
+    function make(tag, cls, text) {
+      const e = document.createElement(tag);
+      if (cls) e.className = cls;
+      if (text) e.textContent = text;
+      return e;
+    }
+
+    // Hàm đọc to một câu tiếng Anh bằng giọng của trình duyệt (dùng cho bài Listening)
+    function speak(text) {
+      if (!("speechSynthesis" in window)) {
+        alert("Trình duyệt của bạn chưa hỗ trợ đọc giọng nói. Nội dung câu: " + text);
+        return;
+      }
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = "en-US";   // giọng tiếng Anh Mỹ
+      u.rate = 0.9;       // đọc chậm hơn một chút cho dễ nghe
+      window.speechSynthesis.speak(u);
+    }
+
+    // ----- 5.3 MỞ / ĐÓNG BÀI TEST -----
+    function openQuiz(skill) {
+      currentQuiz = quizData[skill];
+      qIndex = 0;
+      score = 0;
+      quizTitle.textContent = currentQuiz.title;
+      overlay.classList.add("open");
+      document.body.style.overflow = "hidden";   // khóa cuộn trang phía sau
+      showQuestion();
+    }
+
+    function closeQuiz() {
+      stopListening();   // tắt micro nếu đang nghe
+      if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+      overlay.classList.remove("open");
+      document.body.style.overflow = "";
+    }
+
+    // ----- 5.4 HIỂN THỊ MỘT CÂU HỎI -----
+    function showQuestion() {
+      const total = currentQuiz.questions.length;
+      const item = currentQuiz.questions[qIndex];
+      quizBody.innerHTML = "";   // xóa nội dung cũ
+
+      // Thanh tiến độ
+      quizBody.appendChild(make("div", "progress-text", "Câu " + (qIndex + 1) + " / " + total));
+const bar = make("div", "progress");
+      const fill = make("div", "progress-bar");
+      fill.style.width = (qIndex / total * 100) + "%";
+      bar.appendChild(fill);
+      quizBody.appendChild(bar);
+
+      // Speaking và Writing có giao diện riêng (nói vào micro / gõ bản dịch)
+      if (currentQuiz.type === "speaking") { showSpeakingQuestion(item); return; }
+      if (currentQuiz.type === "writing")  { showWritingQuestion(item);  return; }
+
+      // Đoạn văn (chỉ có ở bài Reading)
+      if (currentQuiz.passage) {
+        quizBody.appendChild(make("div", "passage", currentQuiz.passage));
+      }
+
+      // Nút nghe (có ở các câu có "say")
+      if (item.say) {
+        const listen = make("button", "listen-btn", "🔊 Nghe");
+        listen.addEventListener("click", function () { speak(item.say); });
+        quizBody.appendChild(listen);
+      }
+
+      // Câu hỏi
+      quizBody.appendChild(make("div", "question", item.q));
+
+      // Các đáp án
+      const optionButtons = [];
+      item.options.forEach(function (text, i) {
+        const btn = make("button", "option", String.fromCharCode(65 + i) + ". " + text); // A. B. C. D.
+        btn.addEventListener("click", function () { chooseAnswer(i, optionButtons, item); });
+        optionButtons.push(btn);
+        quizBody.appendChild(btn);
+      });
+    }
+
+    // ----- 5.5 KHI NGƯỜI HỌC CHỌN MỘT ĐÁP ÁN -----
+    function chooseAnswer(chosen, optionButtons, item) {
+      // Khóa tất cả đáp án, không cho chọn lại
+      optionButtons.forEach(function (b) { b.disabled = true; });
+
+      if (chosen === item.answer) {
+        score++;
+        optionButtons[chosen].classList.add("correct");
+      } else {
+        optionButtons[chosen].classList.add("wrong");
+        optionButtons[item.answer].classList.add("correct");   // hiện đáp án đúng
+      }
+
+      // Khung giải thích
+      let note = (chosen === item.answer ? "✅ Chính xác! " : "❌ Chưa đúng. ") + item.explain;
+      if (item.say) note += "  (Nội dung bài nghe: \"" + item.say + "\")";
+      quizBody.appendChild(make("div", "feedback", note));
+
+      // Nút sang câu tiếp / xem kết quả
+      const isLast = qIndex === currentQuiz.questions.length - 1;
+      const next = make("button", "btn btn-red", isLast ? "Xem kết quả" : "Câu tiếp theo →");
+      next.addEventListener("click", function () {
+        if (isLast) { showResult(); } else { qIndex++; showQuestion(); }
+      });
+      quizBody.appendChild(next);
+    }
+
+    // ----- 5.6 MÀN HÌNH KẾT QUẢ -----
+    function showResult() {
+      const total = currentQuiz.questions.length;
+      const percent = Math.round(score / total * 100);
+      let message = "Cố gắng thêm nhé, bạn sẽ tiến bộ nhanh thôi! 💪";
+      if (percent >= 80) message = "Xuất sắc! Bạn làm rất tốt! 🎉";
+else if (percent >= 50) message = "Khá tốt! Luyện thêm chút nữa là hoàn hảo. 👍";
+
+      quizBody.innerHTML = "";
+      const box = make("div", "result");
+      box.appendChild(make("div", "score", formatScore(score) + " / " + total));
+      box.appendChild(make("p", "", message));
+
+      const actions = make("div", "quiz-actions");
+      actions.style.justifyContent = "center";
+
+      const again = make("button", "btn btn-red", "Làm lại");
+      again.addEventListener("click", function () { qIndex = 0; score = 0; showQuestion(); });
+
+      const close = make("button", "btn", "Đóng");
+      close.style.background = "#fff";
+      close.style.color = "var(--red)";
+      close.addEventListener("click", closeQuiz);
+
+      actions.appendChild(again);
+      actions.appendChild(close);
+      box.appendChild(actions);
+      quizBody.appendChild(box);
+    }
+
+// ----- 5.6B CÁC HÀM DÙNG CHUNG CHO SPEAKING & WRITING -----
+
+    // Hiển thị điểm: số nguyên giữ nguyên, số lẻ (ví dụ 3.5) lấy 1 chữ số thập phân
+    function formatScore(n) {
+      return Number.isInteger(n) ? String(n) : n.toFixed(1);
+    }
+
+    // Hiện phần nhận xét + nút "Câu tiếp theo" (có thể kèm nút "Làm lại câu này")
+    function showFeedbackAndNext(text, earned, allowRetry) {
+      quizBody.appendChild(make("div", "feedback", text));
+
+      const actions = make("div", "quiz-actions");
+      if (allowRetry) {
+        const retry = make("button", "btn", "↺ Làm lại câu này");
+        retry.style.background = "#fff";
+        retry.style.color = "var(--red)";
+        retry.addEventListener("click", function () { showQuestion(); });
+        actions.appendChild(retry);
+      }
+
+      const isLast = qIndex === currentQuiz.questions.length - 1;
+      const next = make("button", "btn btn-red", isLast ? "Xem kết quả" : "Câu tiếp theo →");
+      next.addEventListener("click", function () {
+        score += earned;   // cộng điểm của câu này
+        if (isLast) { showResult(); } else { qIndex++; showQuestion(); }
+      });
+      actions.appendChild(next);
+      quizBody.appendChild(actions);
+
+      // Cuộn xuống để thấy nhận xét (hữu ích trên điện thoại)
+      actions.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+
+    // ----- 5.6C SPEAKING: NÓI VÀO MICRO -----
+    let recognition = null;   // đối tượng nhận giọng nói đang chạy (nếu có)
+
+    // Tắt micro (gọi khi đóng bài test)
+    function stopListening() {
+      if (recognition) {
+        recognition.onresult = null;
+        recognition.onerror = null;
+        recognition.onend = null;
+        try { recognition.abort(); } catch (e) {}
+        recognition = null;
+      }
+    }
+
+    function showSpeakingQuestion(item) {
+      // Trình duyệt nào hỗ trợ nhận giọng nói thì có đối tượng này (Chrome, Edge, Safari)
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+      quizBody.appendChild(make("div", "question", item.q));
+
+      const listen = make("button", "listen-btn", "🔊 Nghe lại câu hỏi");
+      listen.addEventListener("click", function () { speak(item.q); });
+      quizBody.appendChild(listen);
+
+      quizBody.appendChild(make("div", "tip", "Bấm nút micro, cho phép trình duyệt dùng micro, rồi trả lời bằng tiếng Anh."));
+
+      const micBtn = make("button", "mic-btn", "🎤 Bấm để nói");
+      const status = make("div", "mic-status", "");
+      const box = make("div", "transcript", "Câu trả lời của bạn sẽ hiện ở đây...");
+
+      // Chấm câu trả lời: có từ khóa đúng chủ đề + nói đủ số từ thì được trọn điểm
+      function finish(text) {
+        micBtn.disabled = true;
+        box.textContent = text;
+        box.classList.add("has-text");
+
+        const lower = text.toLowerCase();
+        const wordCount = lower.split(/\s+/).filter(Boolean).length;
+        const hit = item.keywords.some(function (k) { return lower.includes(k); });
+
+        let earned = 0;
+        let verdict;
+        if (hit && wordCount >= item.minWords) {
+          earned = 1;
+          verdict = "✅ Tốt! Bạn trả lời đúng ý và nói thành câu.";
+        } else if (hit || wordCount >= item.minWords) {
+          earned = 0.5;
+          verdict = wordCount < item.minWords
+            ? "⚠️ Gần đúng. Hãy nói thành câu dài hơn (ít nhất " + item.minWords + " từ)."
+            : "⚠️ Gần đúng. Câu trả lời chưa bám sát câu hỏi.";
+        } else {
+          verdict = "❌ Chưa đúng ý câu hỏi. Hãy nghe lại câu hỏi và thử lại.";
+        }
+
+        showFeedbackAndNext(
+          verdict + "\nBạn đã nói: \"" + text + "\"\nCâu trả lời mẫu: " + item.sample,
+          earned, true
+        );
+      }
+
+      // Tự động đọc câu hỏi khi vừa hiện ra
+      if ("speechSynthesis" in window) {
+        setTimeout(function () { speak(item.q); }, 300);
+      }
+
+      // Trường hợp trình duyệt không hỗ trợ micro: cho gõ câu trả lời thay thế
+      if (!SR) {
+        status.textContent = "⚠️ Trình duyệt này chưa hỗ trợ nhận giọng nói. Hãy dùng Google Chrome hoặc Microsoft Edge. Bạn vẫn có thể gõ câu trả lời bên dưới.";
+        quizBody.appendChild(status);
+        const input = document.createElement("input");
+        input.type = "text";
+        input.className = "type-input";
+        input.placeholder = "Gõ câu trả lời bằng tiếng Anh...";
+        const check = make("button", "btn btn-red", "Kiểm tra");
+        check.addEventListener("click", function () {
+          if (input.value.trim() === "") return;
+          input.disabled = true;
+          check.style.display = "none";
+          finish(input.value.trim());
+        });
+        quizBody.appendChild(input);
+quizBody.appendChild(check);
+        return;
+      }
+
+      // Bấm nút micro: bắt đầu nghe (lần đầu trình duyệt sẽ hỏi quyền dùng micro)
+      micBtn.addEventListener("click", function () {
+        if (recognition) { recognition.stop(); return; }   // đang nghe mà bấm nữa = dừng
+        if ("speechSynthesis" in window) window.speechSynthesis.cancel();   // tắt giọng đọc
+
+        recognition = new SR();
+        recognition.lang = "en-US";          // nhận giọng tiếng Anh
+        recognition.interimResults = true;   // hiện chữ ngay khi đang nói
+        recognition.continuous = false;      // nói xong một câu thì tự dừng
+
+        let finalText = "";
+        let hasError = false;
+
+        recognition.onstart = function () {
+          micBtn.classList.add("recording");
+          micBtn.textContent = "⏹ Đang nghe... bấm để dừng";
+          status.textContent = "🎙️ Hãy nói bằng tiếng Anh...";
+        };
+
+        recognition.onresult = function (event) {
+          let text = "";
+          for (let i = 0; i < event.results.length; i++) {
+            text += event.results[i][0].transcript + " ";
+          }
+          finalText = text.trim();
+          box.textContent = finalText;
+          box.classList.add("has-text");
+        };
+
+        recognition.onerror = function (event) {
+          hasError = true;
+          if (event.error === "not-allowed" || event.error === "service-not-allowed") {
+            status.textContent = "🚫 Micro đang bị chặn. Bấm biểu tượng ổ khóa cạnh thanh địa chỉ, chọn cho phép Micro rồi tải lại trang.";
+          } else if (event.error === "no-speech") {
+            status.textContent = "😶 Chưa nghe thấy giọng nói. Hãy thử lại và nói gần micro hơn.";
+          } else if (event.error === "audio-capture") {
+            status.textContent = "🎤 Không tìm thấy micro. Hãy kiểm tra micro đã được cắm/bật chưa.";
+          } else if (event.error === "network") {
+            status.textContent = "🌐 Nhận giọng nói cần kết nối Internet. Hãy kiểm tra mạng rồi thử lại.";
+          } else if (event.error !== "aborted") {
+            status.textContent = "⚠️ Lỗi micro: " + event.error;
+          }
+        };
+
+        recognition.onend = function () {
+          recognition = null;
+          micBtn.classList.remove("recording");
+          micBtn.textContent = "🎤 Bấm để nói";
+          if (finalText !== "") {
+            status.textContent = "";
+            finish(finalText);                 // có nghe được chữ thì đem đi chấm
+          } else if (!hasError) {
+            status.textContent = "😶 Chưa nghe thấy gì, hãy bấm micro và thử lại.";
+          }
+        };
+
+        try {
+          recognition.start();
+        } catch (e) {
+          recognition = null;
+          status.textContent = "⚠️ Không bật được micro: " + e.message;
+        }
+      });
+quizBody.appendChild(micBtn);
+      quizBody.appendChild(status);
+      quizBody.appendChild(box);
+    }
+
+    // ----- 5.6D WRITING: DỊCH TIẾNG VIỆT SANG TIẾNG ANH -----
+
+    // Chuẩn hóa câu tiếng Anh thành danh sách từ: bỏ hoa/thường, dấu câu, mở rộng dạng viết tắt
+    function normalizeEnglish(s) {
+      s = s.toLowerCase().replace(/[’‘]/g, "'");
+      s = s.replace(/won't/g, "will not")
+           .replace(/can't/g, "can not")
+           .replace(/n't/g, " not")      // doesn't -> does not
+           .replace(/'m\b/g, " am")      // I'm -> I am
+           .replace(/'re\b/g, " are")    // we're -> we are
+           .replace(/'ll\b/g, " will")   // we'll -> we will
+           .replace(/'ve\b/g, " have");  // I've -> I have
+      s = s.replace(/'/g, "").replace(/[^a-z0-9\s]/g, " ");
+      return s.split(/\s+/).filter(Boolean);
+    }
+
+    // Đếm số "bước sửa" (thêm/bớt/đổi từ) để biến câu a thành câu b
+    function wordDistance(a, b) {
+      const dp = [];
+      for (let i = 0; i <= a.length; i++) { dp[i] = [i]; }
+      for (let j = 1; j <= b.length; j++) { dp[0][j] = j; }
+      for (let i = 1; i <= a.length; i++) {
+        for (let j = 1; j <= b.length; j++) {
+          dp[i][j] = Math.min(
+            dp[i - 1][j] + 1,
+            dp[i][j - 1] + 1,
+            dp[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)
+          );
+        }
+      }
+      return dp[a.length][b.length];
+    }
+
+    // So câu của người học với các đáp án chấp nhận được, trả về độ giống nhau cao nhất (0 → 1)
+    function gradeTranslation(text, answers) {
+      const user = normalizeEnglish(text);
+      let best = 0;
+      answers.forEach(function (ans) {
+        const target = normalizeEnglish(ans);
+        const maxLen = Math.max(user.length, target.length);
+        const sim = maxLen === 0 ? 0 : 1 - wordDistance(user, target) / maxLen;
+        if (sim > best) best = sim;
+      });
+      return best;
+    }
+
+    function showWritingQuestion(item) {
+      quizBody.appendChild(make("div", "tip", "Dịch câu tiếng Việt sau sang tiếng Anh:"));
+      quizBody.appendChild(make("div", "vi-sentence", item.vi));
+      quizBody.appendChild(make("div", "hint", "💡 " + item.hint));
+
+      const input = document.createElement("textarea");
+      input.className = "type-input";
+      input.rows = 2;
+      input.placeholder = "Gõ câu tiếng Anh của bạn ở đây...";
+      input.spellcheck = false;
+      quizBody.appendChild(input);
+
+      const check = make("button", "btn btn-red", "Kiểm tra");
+      quizBody.appendChild(check);
+
+      function submit() {
+        const text = input.value.trim();
+        if (text === "") { input.focus(); return; }
+        input.disabled = true;
+        check.style.display = "none";
+
+        const sim = gradeTranslation(text, item.answers);
+        let earned = 0;
+        let verdict;
+if (sim === 1) {
+          earned = 1;
+          verdict = "✅ Chính xác!";
+        } else if (sim >= 0.75) {
+          earned = 0.5;
+          verdict = "⚠️ Gần đúng, còn lỗi nhỏ về từ hoặc ngữ pháp. Hãy so sánh với đáp án mẫu.";
+        } else {
+          verdict = "❌ Chưa đúng.";
+        }
+
+        showFeedbackAndNext(
+          verdict + "\nBạn viết: \"" + text + "\"\nĐáp án mẫu: " + item.answers[0] + "\n💬 " + item.explain,
+          earned, false
+        );
+      }
+
+      check.addEventListener("click", submit);
+      // Nhấn Enter để kiểm tra (Shift+Enter để xuống dòng)
+      input.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); submit(); }
+      });
+    }
+
+    // ----- 5.7 GẮN SỰ KIỆN CHO CÁC NÚT "HỌC NGAY" -----
+    // Tìm mọi liên kết có thuộc tính data-skill rồi gắn sự kiện bấm
+    document.querySelectorAll("[data-skill]").forEach(function (link) {
+      link.addEventListener("click", function (e) {
+        e.preventDefault();                       // chặn nhảy lên đầu trang
+        openQuiz(link.dataset.skill);             // mở bài test đúng kỹ năng
+      });
+    });
+
+    // Đóng popup khi: bấm dấu ×, bấm vào nền tối bên ngoài, hoặc nhấn phím Esc
+    quizClose.addEventListener("click", closeQuiz);
+    overlay.addEventListener("click", function (e) {
+      if (e.target === overlay) closeQuiz();
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") closeQuiz();
+    });
+  </script>
+</body>
+</html>
